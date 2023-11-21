@@ -1,0 +1,126 @@
+.board {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: $white;
+
+  .row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: .6rem;
+
+    .slot {
+      width: 12%;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      position: relative;
+      outline: 2px solid black;
+    }
+    .slot::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      translate: -50% 0;
+      height: 100%;
+      width: 104%;
+      border-radius: 50%; 
+      border-top: .5rem solid $dark_blue;
+    }
+    .empty {
+      background-color: $blue;
+    }
+    .pl-1 {
+      background-color: $red;
+      &::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 50%;
+        translate: -50% 0;
+        height: 100%;
+        width: 104%;
+        border-radius: 50%; 
+        border-top: .4rem solid $red_shade;
+      }
+    }
+    .pl-2 {
+      background-color: $yellow;
+      &::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 50%;
+        translate: -50% 0;
+        height: 100%;
+        width: 104%;
+        border-radius: 50%; 
+        border-top: .4rem solid $yellow_shade;
+      }
+    }
+    .glow {
+      height: 50%;
+      width: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      border-radius: 50%;
+      border: 0.2rem solid white;
+      
+      &::before {
+        content: "";
+        display: block;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        box-shadow: 0px 0px 10px 5px white;
+        opacity: 0; 
+        animation: 1000ms infinite alternate glowingSlot;
+      }
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        box-shadow: inset 0px 0px 10px 1px white;
+        opacity: 0; 
+        animation: 1000ms infinite alternate glowingSlot;
+      }
+    }
+    @keyframes glowingSlot {
+      0% {opacity: 0}
+      100% {opacity: 1}
+    }
+  }
+  .top-row {
+    .slot {
+      cursor: pointer;
+    }
+    .slot::after {
+      content: "";
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      translate: -50% 0;
+      height: 40px;
+      width: 15px;
+      background-color: red;
+      opacity: 0;
+    }
+    .slot:hover::after {
+      opacity: 1;
+    }
+  } 
+}

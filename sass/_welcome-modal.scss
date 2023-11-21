@@ -1,0 +1,57 @@
+.welcome-modal {
+  height: 100vh;
+  width: 100vw;
+  padding-top: 70px;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.288);
+
+  &__body {
+    width: 80vw;
+    max-width: 400px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $white;
+    gap: 20px;
+    padding: 20px 20px 40px;
+    border-radius: 10px;
+    border: 1px solid black;
+
+    .username-msg {
+      transition: opacity 200ms;
+    }
+    .modal-field {
+      position: relative;
+      width: 85%;
+
+      &:nth-of-type(2) {
+        margin: 0px 0 40px;
+      }
+      &__label {
+        position: absolute;
+        bottom: -20px;
+        font-size: .9rem;
+      }
+      &__input {
+        background: none;
+        border: none;
+        border-bottom: 1px solid black;
+        width: 100%;
+        font-size: 1.3rem;
+      }
+    }
+    .modal-btn {
+      width: 70%;
+      padding: 5px;
+      background: none;
+      border: 1px solid black;
+      border-radius: 5px;
+    }
+  }
+}
