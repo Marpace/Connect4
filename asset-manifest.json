@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.js": "/connect4/static/js/main.d1495d78.js",
-    "index.html": "/connect4/index.html",
-    "main.d1495d78.js.map": "/connect4/static/js/main.d1495d78.js.map"
+    "main.js": "/Connect4/static/js/main.d1495d78.js",
+    "index.html": "/Connect4/index.html",
+    "main.d1495d78.js.map": "/Connect4/static/js/main.d1495d78.js.map"
   },
   "entrypoints": [
     "static/js/main.d1495d78.js"
