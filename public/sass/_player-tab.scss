@@ -1,0 +1,95 @@
+.player-tabs {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+
+  .player-tab {
+    height: 55px;
+    width: 35vw;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: $white;
+    border: 1px solid black;
+    border-radius: 5px;
+    position: relative;
+    
+
+    &__name {
+      font-size: 1.3rem;
+    }
+    &__emoticon {
+      height: 50px;
+      width: 50px;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      left: calc(100% - 50px);
+
+      &-img {
+        width: 0px;
+      }
+      .displayed-emoticon {
+        animation-name: popUp;
+        animation-duration: 2000ms;
+        animation-fill-mode: forwards; 
+      }
+      @keyframes popUp {
+        0% {width: 0px}
+        10% {width: 50px}
+        90% {width: 50px}
+        100% {width: 0px}
+      }
+    }
+    .emoticon-2 {
+      left: 0;
+    }
+  }
+  .animated-tab {
+    animation-name: animateTab;
+    animation-duration: 2000ms;
+    animation-fill-mode: forwards; 
+  }
+  @keyframes animateTab {
+    0% {width: 35vw}
+    10% {width: 40vw}
+    90% {width: 40vw}
+    100% {width: 35vw}
+  }
+
+  .player-tab-1::before {
+    content: "";
+    height: 30px;
+    width: 30px;
+    border: 1px solid black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: calc(100% - 15px);
+    translate: 0 -50%;
+    background-color: $red;
+  }
+  .player-tab-2 {
+    .player-tab__name {
+      text-align: right;
+    }
+    .player-tab__wins {
+      text-align: right;
+    }
+    &::before {
+      content: "";
+      height: 30px;
+      width: 30px;
+      border: 1px solid black;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: -15px;
+      translate: 0 -50%;
+      background-color: $yellow;
+    }
+  }
+}

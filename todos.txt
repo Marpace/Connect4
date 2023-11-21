@@ -1,0 +1,3 @@
+- check for winning scenarios that dont work in the checkwin function in board component
+- handle sending emoticons
+- handle turns
