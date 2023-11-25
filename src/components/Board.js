@@ -1,199 +1,60 @@
 import Slot from "./Slot";
-import {useState} from "react";
+import {useState, useContext, useEffect} from "react";
+import { SocketContext } from "../context/SocketContext";
 
 const Board = function(props) {
 
+  const socket = useContext(SocketContext);
+
   //Nested for loop to create board
-  const rows = [];
-  for (let i = 0; i < 6; i++) {
+  const columns = [];
+  for (let i = 0; i < 7; i++) {
     const slots = [];
-    for (let n = 0; n < 7; n++) {
+    for (let n = 0; n < 6; n++) {
       slots.push({state: "empty", winningSlot: false});
-    }
-    rows.push(slots);
+    }  
+    columns.push(slots);
   }
 
-  const [board, setBoard] = useState(rows);
+  const [board, setBoard] = useState(columns);
+
+  useEffect(() => {
+    socket.on("tokenDropResponse", handleTokenDropResponse)
+  }, [])
 
   function tokenDrop(e) {
-    if (!e.target.className.includes("0") || props.gameOver) return;
-    const column = e.target.id;
-    let row = board.findIndex((rows, index) => {
-      return (rows[column].state !== "empty" || index === board.length - 1)
-    })
+    if (props.gameOver || !props.isCurrentPlayer) return;
+    const column = Number(e.target.id.split(" ")[1]);
+    let row = board[column].findIndex((slot, index) => {
+      return slot.state !== "empty" || index === board[column].length - 1;
+    });
 
     //if all slots on that column are filled, return.
     if(row === 0) return;
 
-    // fill the next empty slot, or the last slot if entire column is empty
-    if (row !== (board.length - 1) || board[row][column].state !== "empty") row -= 1;
+    // target the next empty slot, or the last slot if entire column is empty
+    if (row !== (board[column].length - 1) || board[column][row].state !== "empty") row -= 1;
     
-    const winResult = updateBoard(row, column)
-
-    props.setGameOver(winResult.gameOver)
- 
-    if(!winResult.gameOver) {
-      props.setCurrentPlayer(prev => prev === "pl-1" ? "pl-2" : "pl-1");
-    } else {
-      setBoard( prev => {
-        const boardCopy = [...prev];
-        winResult.winningSlots.forEach(slot => {
-          boardCopy[slot.row][slot.column].winningSlot = true;
-        })
-        return boardCopy;
-      })
-    }
+    socket.emit("tokenDrop", {column: column, row: row})
   }
 
-  function updateBoard(row, column) {
-    setBoard(prev => {
-        const boardCopy = [...prev];
-        boardCopy[row][column].state = props.currentPlayer;
-        return boardCopy;
-    });
-    return checkWin(row, column);
-  };
-
-  function checkWin(row, column) {
-    try {
-      if (board[row + 1][column].state === props.currentPlayer) {
-          if (board[row + 2][column].state === props.currentPlayer) {
-              if (board[row + 3][column].state === props.currentPlayer) {
-                  return {
-                    gameOver: true, 
-                    winningSlots: [
-                      {row: row, column: column},
-                      {row: row + 1, column: column},
-                      {row: row + 2, column: column},
-                      {row: row + 3, column: column},
-                    ]
-                  };
-              }
-          }
-      }
-    } catch (e) { console.log(e) }
-    try {
-      if (board[row + 1][column + 1].state === props.currentPlayer) {
-          if (board[row + 2][column + 2].state === props.currentPlayer) {
-              if (board[row + 3][column + 3].state === props.currentPlayer) {
-                return {
-                  gameOver: true, 
-                  winningSlots: [
-                    {row: row, column: column},
-                    {row: row + 1, column: column + 1},
-                    {row: row + 2, column: column + 2},
-                    {row: row + 3, column: column + 3},
-                  ]
-                };
-              }
-          }
-      }
-    } catch (e) { console.log(e) }
-    try {
-      if (board[row + 1][column - 1].state === props.currentPlayer) {
-          if (board[row + 2][column - 2].state === props.currentPlayer) {
-              if (board[row + 3][column - 3].state === props.currentPlayer) {
-                return {
-                  gameOver: true, 
-                  winningSlots: [
-                    {row: row, column: column},
-                    {row: row + 1, column: column - 1},
-                    {row: row + 2, column: column - 2},
-                    {row: row + 3, column: column - 3},
-                  ]
-                };
-              }
-          }
-      }
-    } catch (e) { console.log(e) }
-    try {
-      if (board[row][column + 1].state === props.currentPlayer) {
-          if (board[row][column + 2].state === props.currentPlayer) {
-              if (board[row][column + 3].state === props.currentPlayer) {
-                return {
-                  gameOver: true, 
-                  winningSlots: [
-                    {row: row, column: column},
-                    {row: row, column: column + 1},
-                    {row: row, column: column + 2},
-                    {row: row, column: column + 3},
-                  ]
-                };
-              }
-          }
-      }
-    } catch (e) { console.log(e) }
-    try {
-      if (board[row][column - 1].state === props.currentPlayer) {
-          if (board[row][column - 2].state === props.currentPlayer) {
-              if (board[row][column - 3].state === props.currentPlayer) {
-                return {
-                  gameOver: true, 
-                  winningSlots: [
-                    {row: row, column: column},
-                    {row: row, column: column - 1},
-                    {row: row, column: column - 2},
-                    {row: row, column: column - 3},
-                  ]
-                };
-              }
-          }
-      }
-    } catch (e) { console.log(e) }
-    try {
-      if (board[row - 1][column + 1].state === props.currentPlayer) {
-          if (board[row - 2][column + 2].state === props.currentPlayer) {
-              if (board[row - 3][column + 3].state === props.currentPlayer) {
-                return {
-                  gameOver: true, 
-                  winningSlots: [
-                    {row: row, column: column},
-                    {row: row - 1, column: column + 1},
-                    {row: row - 2, column: column + 2},
-                    {row: row - 3, column: column + 3},
-                  ]
-                };
-              }
-          }
-      }
-    } catch (e) { console.log(e) }
-    try {
-      if (board[row - 1][column - 1].state === props.currentPlayer) {
-          if (board[row - 2][column - 2].state === props.currentPlayer) {
-              if (board[row - 3][column - 3].state === props.currentPlayer) {
-                return {
-                  gameOver: true, 
-                  winningSlots: [
-                    {row: row, column: column},
-                    {row: row - 1, column: column - 1},
-                    {row: row - 2, column: column - 2},
-                    {row: row - 3, column: column - 3},
-                  ]
-                };
-              }
-          }
-      }
-    } catch (e) { console.log(e) }
-
-    return {
-      gameOver: false,
-      winningSlots: []
-    }
+  function handleTokenDropResponse(data) {
+    setBoard(data.board);
+    props.setGameOver(data.gameOver)
   }
-
 
   return (
     <div className="board">
-        {board.map((row, rowIndex) => (
+        {board.map((column, columnIndex) => (
           <div
-            key={rowIndex}
-            className={`row ${rowIndex === 0 ? "top-row" : ""}`}
+            key={columnIndex}
+            className={`column`}
           >
-            {row.map((slot, slotIndex) => (
+            {column.map((slot, slotIndex) => (
               <Slot 
                 key={slotIndex}
                 slot={slot}
-                rowIndex={rowIndex}
+                columnIndex={columnIndex}
                 slotIndex={slotIndex}
                 tokenDrop={tokenDrop}
               />

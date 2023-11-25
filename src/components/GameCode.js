@@ -1,7 +1,7 @@
 function GameCode(props) {
   return (
     <div className="game-code">
-      <p className="game-code__text">{`Camge code: ${props.gameCode}`}</p>
+      <p className="game-code__text">{`Game code: ${props.gameCode}`}</p>
     </div>
   )
 }

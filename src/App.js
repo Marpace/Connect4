@@ -16,12 +16,15 @@ function App() {
   const [message, setMessage] = useState(`${names.playerOne}'s turn`);
   const [displayedEmoticons, setDisplayedEmoticons] = useState({playerOne: "", playerTwo: ""})
   const [gameEntered, setGameEntered] = useState(false);
-  const [gameCode, setGameCode] = useState(null);
+  const [gameCode, setGameCode] = useState(null); 
+  const [isCurrentPlayer, setIsCurrentPlayer] = useState(false)
 
   useEffect(() => {
     socket.on("createGameResponse", handleCreateGameResponse);
     socket.on("joinGameResponse", handleJoinGameResponse);
-  }, [])
+    socket.on("currentPlayer", () => setIsCurrentPlayer(true));
+    socket.on("notCurrentPlayer", () => setIsCurrentPlayer(false));
+  }, []) 
 
   useEffect(() => {
     if (gameOver) {
@@ -34,12 +37,15 @@ function App() {
     setMessage("Waiting for player")
     setGameCode(data.gameCode)
     setGameEntered(true);
+    setIsCurrentPlayer(true);
   }
+
   function handleJoinGameResponse(players) {
     setNames({playerOne: players[0].username, playerTwo: players[1].username})
     setMessage(`${players[0].username}'s turn`)
     setGameEntered(true);
   }
+
 
 
 
@@ -65,6 +71,8 @@ function App() {
             setCurrentPlayer={setCurrentPlayer}
             gameOver={gameOver}
             setGameOver={setGameOver}
+            isCurrentPlayer={isCurrentPlayer}
+            setIsCurrentPlayer={setIsCurrentPlayer}
           />
           <GameMessage message={message} />
           <GameCode gameCode={gameCode} />
