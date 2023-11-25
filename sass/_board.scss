@@ -3,7 +3,6 @@
   max-width: 800px;
   padding: 20px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: .6rem;
@@ -11,14 +10,16 @@
   border-radius: 20px;
   background-color: $white;
 
-  .row {
-    width: 100%;
+  .column {
+    width: 12%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     gap: .6rem;
 
     .slot {
-      width: 12%;
+      width: 95%;
       aspect-ratio: 1/1;
       border-radius: 50%;
       position: relative;
@@ -104,23 +105,4 @@
       100% {opacity: 1}
     }
   }
-  .top-row {
-    .slot {
-      cursor: pointer;
-    }
-    .slot::after {
-      content: "";
-      position: absolute;
-      top: -60px;
-      left: 50%;
-      translate: -50% 0;
-      height: 40px;
-      width: 15px;
-      background-color: red;
-      opacity: 0;
-    }
-    .slot:hover::after {
-      opacity: 1;
-    }
-  } 
 }
