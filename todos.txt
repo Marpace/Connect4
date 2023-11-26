@@ -1,3 +1,6 @@
-- check for winning scenarios that dont work in the checkwin function in board component
-- handle sending emoticons
-- handle turns
+DONE - Prevent player one from making a move before other player joins the game 
+DONE - Change the game message with each turn 
+- Reset game
+- Add timerfor turns
+- Add more emoticons
+- Handle draw scenario

@@ -51,7 +51,7 @@ function WelcomeModal(props) {
         <p className="username-msg" style={{opacity: showMessage ? "" : "0"}}>{validationMessage}</p>
         <div className="modal-field">
           <label style={{color: validationMessage === "Enter a username" ? "red" : ""}} className="modal-field__label">username</label>
-          <input onChange={(e) => setUsername(e.target.value)} className="modal-field__input"></input>
+          <input onChange={(e) => setUsername(e.target.value)} className="modal-field__input" maxLength={15}></input>
         </div>
         <div className="modal-field">
           <label style={{color: validationMessage === "Enter a game code" ? "red" : ""}} className="modal-field__label">game code</label>

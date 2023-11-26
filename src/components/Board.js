@@ -20,10 +20,11 @@ const Board = function(props) {
 
   useEffect(() => {
     socket.on("tokenDropResponse", handleTokenDropResponse)
+    socket.on("resetGameResponse", handleResetGameResponse);
   }, [])
 
   function tokenDrop(e) {
-    if (props.gameOver || !props.isCurrentPlayer) return;
+    if (props.gameOver || props.playerNumber !== props.currentPlayer) return;
     const column = Number(e.target.id.split(" ")[1]);
     let row = board[column].findIndex((slot, index) => {
       return slot.state !== "empty" || index === board[column].length - 1;
@@ -38,10 +39,23 @@ const Board = function(props) {
     socket.emit("tokenDrop", {column: column, row: row})
   }
 
-  function handleTokenDropResponse(data) {
-    setBoard(data.board);
-    props.setGameOver(data.gameOver)
+  function handleTokenDropResponse(room) {
+    setBoard(room.board);
+    props.setGameOver(room.gameOver);
+    if(!room.gameOver) {
+      props.setCurrentPlayer(room.currentPlayer)
+    } else {
+      props.setGamesPlayed(prev => prev + 1)
+      props.setWins({playerOne: room.players[0].wins, playerTwo: room.players[1].wins})
+    }
   }
+
+  function handleResetGameResponse(room) {
+    setBoard(room.board);
+    props.setGameOver(room.gameOver);
+    props.setCurrentPlayer(room.currentPlayer);
+  }
+
 
   return (
     <div className="board">
