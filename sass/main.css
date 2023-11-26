@@ -413,3 +413,12 @@ body {
 .game-code__text {
   text-align: center;
 }
+
+.play-again-btn {
+  width: 200px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-top: 20px;
+  background-color: #e0efde;
+}
