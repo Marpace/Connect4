@@ -45,6 +45,7 @@ const Board = function(props) {
     if(!room.gameOver) {
       props.setCurrentPlayer(room.currentPlayer)
     } else {
+      
       props.setGamesPlayed(prev => prev + 1)
       props.setWins({playerOne: room.players[0].wins, playerTwo: room.players[1].wins})
     }

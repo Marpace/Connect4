@@ -1,3 +1,4 @@
+import "./sass/main.css";
 import {useState, useEffect} from "react";
 import Board from "./components/Board";
 import Emoticons from "./components/Emoticons";
@@ -19,11 +20,14 @@ function App() {
   const [gameCode, setGameCode] = useState(null); 
   const [playerNumber, setPlayerNumber] = useState(1);
   const [gamesPlayed, setGamesPlayed] = useState(0);
+  const [counter, setCounter] = useState(null)
 
   useEffect(() => {
     socket.on("createGameResponse", handleCreateGameResponse);
     socket.on("joinGameResponse", handleJoinGameResponse);
     socket.on("playerNumber", handlePlayerNumber);
+    socket.on("timesUp", handleTimesUp);
+    socket.on("countDown", handleCountDown);
   }, [])  
 
   useEffect(() => {
@@ -64,6 +68,13 @@ function App() {
     socket.emit("resetGame")
   }
 
+  function handleTimesUp(player) {
+    setCurrentPlayer(player)
+  }
+
+  function handleCountDown(seconds) {
+    setCounter(seconds);
+  }
 
   return (
     <SocketContext.Provider value={socket}>
@@ -92,7 +103,7 @@ function App() {
             setGamesPlayed={setGamesPlayed}
             setWins={setWins}
           />
-          <GameMessage message={message} />
+          <GameMessage gameOver={gameOver} message={message} counter={counter}/>
           <GameCode gameCode={gameCode} playerNumber={playerNumber}/>
           <button onClick={resetGame} className={`${gameOver && gamesPlayed > 0 ? "" : "hidden"} ${playerNumber === 2 ? "hidden" : ""} play-again-btn`}>Play Again</button>
           <Emoticons 
