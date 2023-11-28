@@ -1,10 +1,13 @@
 {
   "files": {
-    "main.js": "/Connect4/static/js/main.6e89ef06.js",
+    "main.css": "/Connect4/static/css/main.ffcb32c7.css",
+    "main.js": "/Connect4/static/js/main.c64c8e3a.js",
     "index.html": "/Connect4/index.html",
-    "main.6e89ef06.js.map": "/Connect4/static/js/main.6e89ef06.js.map"
+    "main.ffcb32c7.css.map": "/Connect4/static/css/main.ffcb32c7.css.map",
+    "main.c64c8e3a.js.map": "/Connect4/static/js/main.c64c8e3a.js.map"
   },
   "entrypoints": [
-    "static/js/main.6e89ef06.js"
+    "static/css/main.ffcb32c7.css",
+    "static/js/main.c64c8e3a.js"
   ]
 }
