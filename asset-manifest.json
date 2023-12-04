@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.b078b1d2.css",
-    "main.js": "/static/js/main.f3f46f4d.js",
-    "index.html": "/index.html",
-    "main.b078b1d2.css.map": "/static/css/main.b078b1d2.css.map",
-    "main.f3f46f4d.js.map": "/static/js/main.f3f46f4d.js.map"
+    "main.css": "/Connect4/static/css/main.b078b1d2.css",
+    "main.js": "/Connect4/static/js/main.f3f46f4d.js",
+    "index.html": "/Connect4/index.html",
+    "main.b078b1d2.css.map": "/Connect4/static/css/main.b078b1d2.css.map",
+    "main.f3f46f4d.js.map": "/Connect4/static/js/main.f3f46f4d.js.map"
   },
   "entrypoints": [
     "static/css/main.b078b1d2.css",
