@@ -4,7 +4,7 @@ import { SocketContext } from "../context/SocketContext";
 function Emoticons(props) {
 
   let sources = [];
-  for(let i = 0; i < 12; i++) {
+  for(let i = 0; i < 22; i++) {
     sources.push(`./assets/emoticons/emoticon ${i + 1}.png`);
   }
   
@@ -45,9 +45,11 @@ function Emoticons(props) {
       </button>
       <div className={`emoticons__faces ${showEmoticons ? "faces-shown" : ""}`}>
         <span onClick={() => setShowEmoticons(false)} className="emoticons-close-btn"></span>
-        {imgSources.map((source, index) => ( 
-          <img onClick={() => sendEmoticon(source)} className="face" key={index} src={source}></img>
-        ))}
+        <div className="emoticons__faces-wrap">
+          {imgSources.map((source, index) => ( 
+            <img onClick={() => sendEmoticon(source)} className="face" key={index} src={source}></img>
+          ))}
+        </div>
       </div>
     </div>
   ) 

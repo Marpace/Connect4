@@ -2,9 +2,9 @@ DONE - Prevent player one from making a move before other player joins the game
 DONE - Change the game message with each turn 
 DONE - Reset game
 DONE - Add timer for turns
-- Add more emoticons
-- Handle draw scenario
-- Handle player disconnecting
+DONE - Add more emoticons
+Done (needs testing) - Handle draw scenario
+Done - Handle player disconnecting/reconnecting
 - Make it responsive
 - Add game instructions 
 - Animate token drop

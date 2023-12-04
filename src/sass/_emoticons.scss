@@ -12,15 +12,11 @@
     align-items: center;
   }
   &__faces {
-    height: fit-content;
     width: 100%;
     padding: 10px 0;
     position: absolute;
     bottom: -100%;
     left: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
     background-color: $dark_blue;
     transition: bottom 300ms ease-in;
 
@@ -57,6 +53,16 @@
         transform: rotate(-45deg);
       }
     }
+    &-wrap {
+      height: 135px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      overflow-x: scroll;
+    }
+
     .face {
       width: 15%;
     }

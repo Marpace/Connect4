@@ -10,8 +10,22 @@ import {SocketContext, socket} from "./context/SocketContext"
 
 function App() {
 
+  //Nested for loop to create board
+  const columns = [];
+  for (let i = 0; i < 7; i++) {
+    const slots = [];
+    for (let n = 0; n < 6; n++) {
+      slots.push({state: "empty", winningSlot: false});
+    }  
+    columns.push(slots);
+  }
+
+
+  const [board, setBoard] = useState(columns);
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [gameOver, setGameOver] = useState(true);
+  const [draw, setDraw] = useState(false);
+  const [disconnected, setDisconnected] = useState(false);
   const [wins, setWins] = useState({playerOne: 0, playerTwo: 0});
   const [names, setNames] = useState({playerOne: "", playerTwo: ""});
   const [message, setMessage] = useState(`${names.playerOne}'s turn`);
@@ -26,31 +40,40 @@ function App() {
     socket.on("createGameResponse", handleCreateGameResponse);
     socket.on("joinGameResponse", handleJoinGameResponse);
     socket.on("playerNumber", handlePlayerNumber);
+    socket.on("tokenDropResponse", handleTokenDropResponse);
+    socket.on("resetGameResponse", handleResetGameResponse);
     socket.on("timesUp", handleTimesUp);
     socket.on("countDown", handleCountDown);
+    socket.on("playerDisconnected", handlePlayerDisconnected);
   }, [])  
 
   useEffect(() => {
-    if (gameOver) {
+    if (gameOver && !draw && !disconnected) {
       setMessage(`${currentPlayer === 1 ? names.playerOne : names.playerTwo} wins!`);
+    } else if (gameOver && draw) {
+      setMessage("Draw!")
+    } else if (gameOver && disconnected) {
+      setMessage("The other player player has left the game")
     }
   }, [gameOver]); 
   
   useEffect(() => {
-    if (currentPlayer === 1) {
-      setMessage(`${names.playerOne}'s turn`);
-    } else {
-      setMessage(`${names.playerTwo}'s turn`)
+    if(!gameOver) {
+      if (currentPlayer === 1) {
+        setMessage(`${names.playerOne}'s turn`);
+      } else { 
+        setMessage(`${names.playerTwo}'s turn`)
+      }
     }
-  }, [currentPlayer]); 
+  }, [currentPlayer, gameOver]); 
 
   function handleCreateGameResponse(data) {
     console.log(data)
-    setNames({playerOne: data.gameState.players[0].username, playerTwo: ""})
+    setNames({playerOne: data.room.players[0].username, playerTwo: ""})
     setMessage("Waiting for player")
     setGameCode(data.gameCode)
     setGameEntered(true);
-    setGameOver(data.gameState.gameOver)
+    setGameOver(data.room.gameOver)
   }
 
   function handleJoinGameResponse(room) {
@@ -58,22 +81,52 @@ function App() {
     setMessage(`${room.players[0].username}'s turn`)
     setGameEntered(true);
     setGameOver(room.gameOver)
+    setDisconnected(false);
   }
 
   function handlePlayerNumber(number) {
     setPlayerNumber(number)
   }
 
+  function handleTokenDropResponse(room) {
+    setBoard(room.board);
+    setGameOver(room.gameOver);
+    setDraw(room.draw)
+    if(!room.gameOver) {
+      setCurrentPlayer(room.currentPlayer)
+    } else {
+      setGamesPlayed(prev => prev + 1)
+      setWins({playerOne: room.players[0].wins, playerTwo: room.players[1].wins})
+    }
+  }
+
   function resetGame() {
     socket.emit("resetGame")
   }
 
-  function handleTimesUp(player) {
-    setCurrentPlayer(player)
+  function handleResetGameResponse(room) {
+    setBoard(room.board);
+    setGameOver(room.gameOver);
+    setCurrentPlayer(room.currentPlayer);
   }
 
   function handleCountDown(seconds) {
     setCounter(seconds);
+  }
+  
+  function handleTimesUp(player) {
+    setCurrentPlayer(player)
+  }
+
+
+  function handlePlayerDisconnected(data) {
+    setGameOver(data.room.gameOver)
+    setNames({playerOne: data.room.players[0].username, playerTwo: ""})
+    setWins({playerOne: 0, playerTwo: 0})
+    setPlayerNumber(data.room.players[0].playerNumber)
+    setDisconnected(true);
+    setBoard(data.room.board)
+    setGameCode(data.gameCode)
   }
 
   return (
@@ -94,14 +147,10 @@ function App() {
           />
         </div>
           <Board
+            board={board}
             currentPlayer={currentPlayer} 
-            setCurrentPlayer={setCurrentPlayer}
             playerNumber={playerNumber}
-            setPlayerNumber={setPlayerNumber}
             gameOver={gameOver}
-            setGameOver={setGameOver}
-            setGamesPlayed={setGamesPlayed}
-            setWins={setWins}
           />
           <GameMessage gameOver={gameOver} message={message} counter={counter}/>
           <GameCode gameCode={gameCode} playerNumber={playerNumber}/>
