@@ -7,6 +7,7 @@ import GameMessage from "./components/GameMessage";
 import PlayerTab from "./components/PlayerTab";
 import WelcomeModal from "./components/WelcomeModal";
 import {SocketContext, socket} from "./context/SocketContext"
+import GameInstructions from "./components/GameInstructions";
 
 function App() {
 
@@ -158,6 +159,7 @@ function App() {
           <Emoticons 
             setDisplayedEmoticons={setDisplayedEmoticons}
           />
+          <GameInstructions />
           <WelcomeModal 
             gameEntered={gameEntered}
           />
