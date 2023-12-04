@@ -5,8 +5,8 @@
 <circle cx="14.9286" cy="8.64284" r="1.57143" fill="black"/>
 <defs>
 <radialGradient id="paint0_radial_14_615" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(11 11) rotate(90) scale(11)">
-<stop stop-color="#F4CD0E"/>
-<stop offset="1" stop-color="#F3A80E"/>
+<stop stop-color="#E2B02F"/>
+<stop offset="1" stop-color="#D17508"/>
 </radialGradient>
 </defs>
 </svg>
