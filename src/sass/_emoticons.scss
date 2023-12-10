@@ -10,6 +10,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    right: 0;
+    bottom: 160px;
+    border-radius: 5px 0 0 5px;
+    border-right: none;
+
+    @include responsive($tablet) {
+      position: static;
+      border-radius: 4px;
+      border-right: 1px solid black;
+    }
   }
   &__faces {
     width: 100%;
@@ -19,6 +30,10 @@
     left: 0;
     background-color: $dark_blue;
     transition: bottom 300ms ease-in;
+    z-index: 10;
+    @include responsive($laptop) {
+      height: 135px;
+    }
 
     .emoticons-close-btn {
       height: 30px;
@@ -61,13 +76,35 @@
       flex-wrap: wrap;
       justify-content: space-around;
       overflow-x: scroll;
+      background-color: $dark_blue;
+
+      @include responsive($tablet) {
+        height: 150px;
+      }
+      @include responsive($laptop) {
+        height: 100%;
+        padding: 0 10px;
+        align-items: center;
+        justify-content: center;
+      }
     }
 
     .face {
       width: 15%;
+
+      @include responsive($tablet) {
+        width: 8vw;
+      }
+      @include responsive($laptop) {
+        width: 50px;
+      }
     }
   }
   .faces-shown {
     bottom: 0px;
+
+    @include responsive($laptop) {
+
+    }
   }
 }

@@ -1,12 +1,19 @@
 .player-tabs {
-  width: 100%;
+  width: 90vw;
+  max-width: 700px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 50px;
+  @include responsive($laptop) {
+    position: absolute;
+    top: 100px;
+    width: calc(50vw + 369px);
+    max-width: 1070px;
+  }
 
   .player-tab {
-    height: 55px;
-    width: 35vw;
+    height: 60px;
+    width: 130px;
     padding: 0 10px;
     display: flex;
     flex-direction: column;
@@ -15,22 +22,29 @@
     border: 1px solid black;
     border-radius: 5px;
     position: relative;
+    @include responsive($tablet) {
+      height: 70px;
+      padding: 10px;
+    }
     
 
     &__name {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
     }
     &__emoticon {
-      height: 50px;
+      height: 100%;
       width: 50px;
       position: absolute;
       display: flex;
       justify-content: center;
       align-items: center;
-      left: calc(100% - 70px);
+      right: 5px;
+      @include responsive($laptop) {
+        right: 10px;
+      }
 
       &-img {
-        width: 0px;
+        height: 0%;
       }
       .displayed-emoticon {
         animation-name: popUp;
@@ -38,14 +52,17 @@
         animation-fill-mode: forwards; 
       }
       @keyframes popUp {
-        0% {width: 0px}
-        10% {width: 50px}
-        90% {width: 50px}
-        100% {width: 0px}
+        0% {height: 0%}
+        10% {height: 100%}
+        90% {height: 100%}
+        100% {height: 0%}
       }
     }
     .emoticon-2 {
-      left: 20px;
+      left: 5px;
+      @include responsive($laptop) {
+        left: 10px;
+      }
     }
   }
   .animated-tab {
@@ -54,22 +71,22 @@
     animation-fill-mode: forwards; 
   }
   @keyframes animateTab {
-    0% {width: 35vw}
-    10% {width: 40vw}
-    90% {width: 40vw}
-    100% {width: 35vw}
+    0% {width: 130px}
+    10% {width: 160px}
+    90% {width: 160px}
+    100% {width: 130px}
   }
 
   .player-tab-1::before {
     content: "";
-    height: 30px;
+    height: 15px;
     width: 30px;
     border: 1px solid black;
-    border-radius: 50%;
+    border-radius: 30px 30px 0 0;
+    border-bottom: none;
     position: absolute;
-    top: 50%;
-    left: calc(100% - 15px);
-    translate: 0 -50%;
+    top: -17px;
+    left: 20px;
     background-color: $red;
   }
   .player-tab-2 {
@@ -81,14 +98,14 @@
     }
     &::before {
       content: "";
-      height: 30px;
+      height: 15px;
       width: 30px;
       border: 1px solid black;
-      border-radius: 50%;
+      border-radius: 30px 30px 0 0;
+      border-bottom: none;
       position: absolute;
-      top: 50%;
-      left: -15px;
-      translate: 0 -50%;
+      top: -17px;
+      right: 20px;
       background-color: $yellow;
     }
   }

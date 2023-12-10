@@ -6,5 +6,5 @@ DONE - Add more emoticons
 Done (needs testing) - Handle draw scenario
 Done - Handle player disconnecting/reconnecting
 - Make it responsive
-- Add game instructions 
+Done - Add game instructions 
 - Animate token drop

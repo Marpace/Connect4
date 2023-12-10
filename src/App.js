@@ -54,7 +54,7 @@ function App() {
     } else if (gameOver && draw) {
       setMessage("Draw!")
     } else if (gameOver && disconnected) {
-      setMessage("The other player player has left the game")
+      setMessage("The other player has left the game")
     }
   }, [gameOver]); 
   
@@ -153,13 +153,15 @@ function App() {
             playerNumber={playerNumber}
             gameOver={gameOver}
           />
-          <GameMessage gameOver={gameOver} message={message} counter={counter}/>
-          <GameCode gameCode={gameCode} playerNumber={playerNumber}/>
-          <button onClick={resetGame} className={`${gameOver && gamesPlayed > 0 ? "" : "hidden"} ${playerNumber === 2 ? "hidden" : ""} play-again-btn`}>Play Again</button>
-          <Emoticons 
-            setDisplayedEmoticons={setDisplayedEmoticons}
-          />
-          <GameInstructions />
+          <div className="game-info">
+            <GameMessage gameOver={gameOver} message={message} counter={counter}/>
+            <GameCode gameCode={gameCode} playerNumber={playerNumber}/>
+            <button onClick={resetGame} className={`${gameOver && gamesPlayed > 0 ? "" : "hidden"} ${playerNumber === 2 ? "hidden" : ""} play-again-btn`}>Play Again</button>
+            <Emoticons 
+              setDisplayedEmoticons={setDisplayedEmoticons}
+            />
+            <GameInstructions />
+          </div>
           <WelcomeModal 
             gameEntered={gameEntered}
           />

@@ -1,6 +1,7 @@
 .message-box {
   min-width: 200px;
-  padding: 5px 10px;
+  min-height: 40px;
+  padding: 0 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,6 +13,6 @@
 
   &__text, &__counter {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 }

@@ -27,12 +27,18 @@ function Emoticons(props) {
   function handleReceiveEmoticon(data) {
     props.setDisplayedEmoticons(prev => {
       const copy = {...prev};
-      copy.playerOne = data.playerNumber === 1 ? data.source : copy.playerOne
-      copy.playerTwo = data.playerNumber === 2 ? data.source : copy.playerTwo
+      copy.playerOne = data.playerNumber === 1 ? data.source : copy.playerOne;
+      copy.playerTwo = data.playerNumber === 2 ? data.source : copy.playerTwo;
       return copy;
     })
     setTimeout(() => {
-      props.setDisplayedEmoticons({playerOne: "", playerTwo: ""});
+      props.setDisplayedEmoticons( prev => {
+        console.log(prev)
+        const copy = {...prev}
+        copy.playerOne = data.playerNumber === 1 ? "" : copy.playerOne;
+        copy.playerTwo = data.playerNumber === 2 ? "" : copy.playerTwo;
+        return copy;
+      });
       setSendingEmoticon(false);
     }, 2000);
   }

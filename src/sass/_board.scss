@@ -1,14 +1,18 @@
 .board {
-  width: 100%;
-  max-width: 800px;
+  width: 90vw;
+  max-width: 700px;
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: .6rem;
   border: 1px solid black;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: $white;
+  @include responsive($laptop) {
+    width: 50vw;
+  }
+
 
   .column {
     width: 12%;

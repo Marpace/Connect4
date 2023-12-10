@@ -1,0 +1,19 @@
+.game-info {
+  @include responsive($tablet) {
+    width: 90vw;
+    max-width: 700px;
+    display: flex;
+    gap: 20px;
+  }
+  @include responsive($laptop) {
+    width: 50vw;
+    position: relative;
+  }
+
+
+  @import "game-message";
+  @import "game-code";
+  @import "play-again-btn";
+  @import "emoticons";
+  @import "game-instructions";
+}

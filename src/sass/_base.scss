@@ -1,4 +1,4 @@
-// Color Variables
+//Variables +++++++++++++++++++++++++++++++++++++++
 $blue: #33658a;
 $dark_blue: rgb(3, 18, 36);
 $red: #981f37;
@@ -7,9 +7,22 @@ $yellow: #e28413;
 $yellow_shade: #442704;
 $white: #e0efde;
 
-// Fonts
+$tablet: 768px;
+$laptop: 1280px;
+$desktop: 1600px;
+
+
+// mixins +++++++++++++++++++++++++++++++++++++++
+@mixin responsive($size) {
+  @media only screen and (min-width: $size) {
+    @content
+  }
+}
+
+// Fonts +++++++++++++++++++++++++++++++++++++++
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+// Reset +++++++++++++++++++++++++++++++++++++++
 body, button, input {
   font-family: "Bebas Neue", sans-serif;
   font-size: 18px;
@@ -21,22 +34,28 @@ body, button, input {
   box-sizing: border-box;
 }
 
-html, body {
-  overflow-x: hidden;
-}
 body {
   height: 100vh;
   background-color: $blue;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
+  @include responsive($laptop) {
+    overflow: auto;
+  }
 }
 .main {
-  padding: 20px 10px 0;
+  padding: 30px 10px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: $blue;
+  @include responsive($tablet) {
+    padding: 30px 50px 0;
+  }
+  @include responsive($laptop) {
+    padding-top: 50px;
+  }
 }
 
 .disabled {

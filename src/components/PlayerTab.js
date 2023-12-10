@@ -17,7 +17,7 @@ function PlayerTab(props) {
   }, [props.name])  
 
   return (
-    <div className={`player-tab player-tab-${props.player} ${props.displayedEmoticon === "" ? "" : "animated-tab"}`}>
+    <div className={`player-tab player-tab-${props.player} ${props.displayedEmoticon === "" ? "" : "animated-tab"} ${props.name === "" ? "hidden" : ""}`}>
     <div className={`player-tab__emoticon emoticon-${props.player}`}>
       <img className={`player-tab__emoticon-img ${props.displayedEmoticon === "" ? "" : "displayed-emoticon"}`} src={props.displayedEmoticon}></img>
     </div>
