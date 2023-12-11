@@ -20,6 +20,7 @@ function Emoticons(props) {
 
   function sendEmoticon(source) {
     if(sendingEmoticon) return;
+    setShowEmoticons(false);
     setSendingEmoticon(true);
     socket.emit("sendEmoticon", source)
   }
@@ -47,7 +48,7 @@ function Emoticons(props) {
   return (
     <div className="emoticons">
       <button onClick={() => setShowEmoticons(true)} className="emoticon-btn">
-        <img src="./assets/smiley.svg"></img>
+        <img onClick={() => setShowEmoticons(true)} className="smiley" src="./assets/smiley.svg"></img>
       </button>
       <div className={`emoticons__faces ${showEmoticons ? "faces-shown" : ""}`}>
         <span onClick={() => setShowEmoticons(false)} className="emoticons-close-btn"></span>

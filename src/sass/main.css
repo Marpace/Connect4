@@ -11,15 +11,10 @@ body, button, input {
 }
 
 body {
-  height: 100vh;
+  height: 100svh;
   background-color: #33658a;
   position: relative;
   overflow: hidden;
-}
-@media only screen and (min-width: 1280px) {
-  body {
-    overflow: auto;
-  }
 }
 
 .main {
@@ -37,7 +32,7 @@ body {
 }
 @media only screen and (min-width: 1280px) {
   .main {
-    padding-top: 50px;
+    padding-top: 100px;
   }
 }
 
@@ -185,7 +180,7 @@ body {
   max-width: 700px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 @media only screen and (min-width: 1280px) {
   .player-tabs {
@@ -376,7 +371,6 @@ body {
 @media only screen and (min-width: 1280px) {
   .game-info {
     width: 50vw;
-    position: relative;
   }
 }
 .game-info .message-box {
@@ -394,10 +388,10 @@ body {
 }
 .game-info .message-box__text, .game-info .message-box__counter {
   text-align: center;
-  font-size: 1.6rem;
+  font-size: 1.3rem;
 }
 .game-info .game-code {
-  height: 40px;
+  height: 30px;
   min-width: 200px;
   padding: 0 10px;
   margin-top: 20px;
@@ -408,9 +402,14 @@ body {
   justify-content: center;
   align-items: center;
 }
+@media only screen and (min-width: 768px) {
+  .game-info .game-code {
+    height: 40px;
+  }
+}
 .game-info .game-code__text {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 .game-info .play-again-btn {
   width: 200px;
@@ -421,8 +420,8 @@ body {
   background-color: #e0efde;
 }
 .game-info .emoticons .emoticon-btn {
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   margin-top: 20px;
   border: 1px solid black;
   border-radius: 5px;
@@ -432,21 +431,31 @@ body {
   align-items: center;
   position: fixed;
   right: 0;
-  bottom: 160px;
+  bottom: 110px;
   border-radius: 5px 0 0 5px;
   border-right: none;
 }
 @media only screen and (min-width: 768px) {
   .game-info .emoticons .emoticon-btn {
+    height: 40px;
+    width: 40px;
     position: static;
     border-radius: 4px;
     border-right: 1px solid black;
   }
 }
+.game-info .emoticons .emoticon-btn .smiley {
+  width: 17px;
+}
+@media only screen and (min-width: 768px) {
+  .game-info .emoticons .emoticon-btn .smiley {
+    width: 20px;
+  }
+}
 .game-info .emoticons__faces {
   width: 100%;
   padding: 10px 0;
-  position: absolute;
+  position: fixed;
   bottom: -100%;
   left: 0;
   background-color: rgb(3, 18, 36);
@@ -455,7 +464,11 @@ body {
 }
 @media only screen and (min-width: 1280px) {
   .game-info .emoticons__faces {
-    height: 135px;
+    height: 140px;
+    width: 50vw;
+    max-width: 700px;
+    left: 50%;
+    translate: -50% 0;
   }
 }
 .game-info .emoticons__faces .emoticons-close-btn {
@@ -511,6 +524,7 @@ body {
     padding: 0 10px;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
 }
 .game-info .emoticons__faces .face {
@@ -529,28 +543,46 @@ body {
 .game-info .emoticons .faces-shown {
   bottom: 0px;
 }
+@media only screen and (min-width: 1280px) {
+  .game-info .emoticons .faces-shown {
+    bottom: 20px;
+  }
+}
 .game-info .game-instructions__btn {
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   margin-top: 20px;
   border-radius: 4px 0 0 4px;
   border: 1px solid black;
   background-color: #e0efde;
   position: fixed;
   right: 0;
-  bottom: 100px;
+  bottom: 60px;
   border-right: none;
   z-index: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 @media only screen and (min-width: 768px) {
   .game-info .game-instructions__btn {
+    height: 40px;
+    width: 40px;
     position: static;
     border-radius: 4px;
     border-right: 1px solid black;
   }
 }
+.game-info .game-instructions__btn .info-icon {
+  width: 17px;
+}
+@media only screen and (min-width: 768px) {
+  .game-info .game-instructions__btn .info-icon {
+    width: 20px;
+  }
+}
 .game-info .game-instructions__text {
-  position: absolute;
+  position: fixed;
   bottom: -100%;
   transition: bottom 300ms;
   width: 100%;
@@ -560,12 +592,20 @@ body {
 }
 @media only screen and (min-width: 1280px) {
   .game-info .game-instructions__text {
-    opacity: 0;
+    width: 50vw;
+    max-width: 700px;
+    left: 50%;
+    translate: -50% 0;
   }
 }
 .game-info .game-instructions__text .instructions {
   color: #e0efde;
-  font-size: 1.5rem;
+  font-size: 1rem;
+}
+@media only screen and (min-width: 768px) {
+  .game-info .game-instructions__text .instructions {
+    font-size: 1.3rem;
+  }
 }
 .game-info .game-instructions__text .close-btn {
   height: 30px;
@@ -601,4 +641,9 @@ body {
 }
 .game-info .game-instructions .instructions-shown {
   bottom: 0;
+}
+@media only screen and (min-width: 1280px) {
+  .game-info .game-instructions .instructions-shown {
+    bottom: 20px;
+  }
 }

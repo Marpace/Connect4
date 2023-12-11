@@ -35,13 +35,10 @@ body, button, input {
 }
 
 body {
-  height: 100vh;
+  height: 100svh;
   background-color: $blue;
   position: relative;
   overflow: hidden;
-  @include responsive($laptop) {
-    overflow: auto;
-  }
 }
 .main {
   padding: 30px 10px 0;
@@ -54,7 +51,7 @@ body {
     padding: 30px 50px 0;
   }
   @include responsive($laptop) {
-    padding-top: 50px;
+    padding-top: 100px;
   }
 }
 
