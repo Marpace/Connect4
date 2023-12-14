@@ -4,7 +4,7 @@ const Slot = function(props) {
       id={`${props.slotIndex} ${props.columnIndex}`}
       key={props.slotIndex}
       className={
-        `slot ${props.columnIndex} ${props.slot.state === "empty" ? "empty" : "pl-" + props.slot.state} ${props.slot.winningSlot === true ? "winning-slot" : ""}`
+        `slot ${props.columnIndex} ${props.slot.state === "empty" ? "empty" : "pl-" + props.slot.state}`
         } 
       onClick={props.tokenDrop}  
     >

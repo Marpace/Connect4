@@ -5,6 +5,7 @@ DONE - Add timer for turns
 DONE - Add more emoticons
 Done (needs testing) - Handle draw scenario
 Done - Handle player disconnecting/reconnecting
-- Make it responsive
+Done - Make it responsive
 Done - Add game instructions 
 - Animate token drop
+- Play against computer

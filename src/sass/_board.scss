@@ -1,16 +1,33 @@
 .board {
-  width: 90vw;
-  max-width: 700px;
-  padding: 20px;
+  width: 345px;
+  padding: 17px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: .6rem;
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: $white;
-  @include responsive($laptop) {
-    width: 50vw;
+  gap: 9px;
+  position: relative;
+  @include responsive(414px) {
+    width: 406px;
+    padding: 20px 10px;
+  }
+  @include responsive(500px) {
+    width: 517px;
+    padding: 24px 10px;
+    gap: 7px;
+  }
+  @include responsive(600px) {
+    width: 585px;
+    padding: 27px 10px;
+    gap: 12px;
+  }
+  @include responsive(700px) {
+    width: 685px;
+    padding: 31px 10px;
+    gap: 6px;
+  }
+  @include responsive($tablet) {
+    width: 776px;
+    padding: 35px 10px;
   }
 
 
@@ -20,93 +37,82 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: .6rem;
+    gap: 11px;
+    position: relative;
+    @include responsive(500px) {
+      gap: 10px;
+    }
+    @include responsive(600px) {
+      gap: 16px;
+    }
+    @include responsive(700px) {
+      gap: 9px;
+    }
+    @include responsive($tablet) {
+      gap: 10px;
+    }
 
-    .slot {
+    @import "slot";
+
+    .falling-token {
       width: 95%;
       aspect-ratio: 1/1;
       border-radius: 50%;
-      position: relative;
-      outline: 2px solid black;
-    }
-    .slot::before {
-      content: "";
-      position: absolute;
-      top: -1px;
-      left: 50%;
-      translate: -50% 0;
-      height: 100%;
-      width: 104%;
-      border-radius: 50%; 
-      border-top: .5rem solid $dark_blue;
-    }
-    .empty {
-      background-color: $blue;
-    }
-    .pl-1 {
       background-color: $red;
-      &::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: 50%;
-        translate: -50% 0;
-        height: 100%;
-        width: 104%;
-        border-radius: 50%; 
-        border-top: .4rem solid $red_shade;
-      }
-    }
-    .pl-2 {
-      background-color: $yellow;
-      &::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: 50%;
-        translate: -50% 0;
-        height: 100%;
-        width: 104%;
-        border-radius: 50%; 
-        border-top: .4rem solid $yellow_shade;
-      }
-    }
-    .glow {
-      height: 50%;
-      width: 50%;
+      border: 1px solid black;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      translate: -50% -50%;
-      border-radius: 50%;
-      border: 0.2rem solid white;
-      
-      &::before {
-        content: "";
-        display: block;
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        box-shadow: 0px 0px 10px 5px white;
-        opacity: 0; 
-        animation: 1000ms infinite alternate glowingSlot;
-      }
-      &::after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        box-shadow: inset 0px 0px 10px 1px white;
-        opacity: 0; 
-        animation: 1000ms infinite alternate glowingSlot;
-      }
+      transition-property: top;
+      transition-duration: 300ms;
+      transition-timing-function: ease-in;
+      top: -15%;
     }
-    @keyframes glowingSlot {
-      0% {opacity: 0}
-      100% {opacity: 1}
+    @keyframes fall {
+
+    }
+
+  }
+  .board-img {
+    width: 345px;
+    position: absolute;
+    top: 0;
+    @include responsive(414px) {
+      width: 400px;
+    }
+    @include responsive(500px) {
+      width: 485px;
+    }
+    @include responsive(600px) {
+      width: 580px;
+    }
+    @include responsive(700px) {
+      width: 620px;
+    }
+    @include responsive($tablet) {
+      width: 700px;
+    }
+  }
+  .clickable-columns {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left:0;
+    justify-content: center;
+    display: flex;
+    gap: 7px;
+    @include responsive(500px) {
+      gap: 5px;
+    }
+    @include responsive(600px) {
+      gap: 10px;
+    }
+    @include responsive(700px) {
+      gap: 3px;
+    }
+
+    &__col {
+      width: 12%;
+      height: 100%;
     }
   }
 }

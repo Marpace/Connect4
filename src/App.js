@@ -36,6 +36,7 @@ function App() {
   const [playerNumber, setPlayerNumber] = useState(1);
   const [gamesPlayed, setGamesPlayed] = useState(0);
   const [counter, setCounter] = useState(null)
+  const [droppedToken, setDroppedToken] = useState({column: null, row: null})
 
   useEffect(() => {
     socket.on("createGameResponse", handleCreateGameResponse);
@@ -89,16 +90,21 @@ function App() {
     setPlayerNumber(number)
   }
 
-  function handleTokenDropResponse(room) {
-    setBoard(room.board);
-    setGameOver(room.gameOver);
-    setDraw(room.draw)
-    if(!room.gameOver) {
-      setCurrentPlayer(room.currentPlayer)
-    } else {
-      setGamesPlayed(prev => prev + 1)
-      setWins({playerOne: room.players[0].wins, playerTwo: room.players[1].wins})
-    }
+  function handleTokenDropResponse(data) {
+    console.log(data)
+    setDroppedToken({column: data.token.column, row: data.token.row})
+    setTimeout(() => {
+      setBoard(data.room.board);
+      setGameOver(data.room.gameOver);
+      setDraw(data.room.draw)
+      if(!data.room.gameOver) {
+        setCurrentPlayer(data.room.currentPlayer)
+      } else {
+        setGamesPlayed(prev => prev + 1)
+        setWins({playerOne: data.room.players[0].wins, playerTwo: data.room.players[1].wins})
+      }
+      setDroppedToken({column: null, row: null})
+    }, 370);
   }
 
   function resetGame() {
@@ -118,7 +124,6 @@ function App() {
   function handleTimesUp(player) {
     setCurrentPlayer(player)
   }
-
 
   function handlePlayerDisconnected(data) {
     setGameOver(data.room.gameOver)
@@ -152,6 +157,7 @@ function App() {
             currentPlayer={currentPlayer} 
             playerNumber={playerNumber}
             gameOver={gameOver}
+            droppedToken={droppedToken}
           />
           <div className="game-info">
             <GameMessage gameOver={gameOver} message={message} counter={counter}/>

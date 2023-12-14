@@ -1,0 +1,53 @@
+.slot {
+  width: 95%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  outline: 2px solid black;
+  position: relative;
+}
+.empty {
+  background-color: transparent;
+}
+.pl-1 {
+  background-color: $red;
+}
+.pl-2 {
+  background-color: $yellow;
+}
+.glow {
+  height: 50%;
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 0.2rem solid white;
+  
+  &::before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px 5px white;
+    opacity: 0; 
+    animation: 1000ms infinite alternate glowingSlot;
+  }
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 10px 1px white;
+    opacity: 0; 
+    animation: 1000ms infinite alternate glowingSlot;
+  }
+}
+@keyframes glowingSlot {
+  0% {opacity: 0}
+  100% {opacity: 1}
+}
