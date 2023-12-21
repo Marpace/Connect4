@@ -44,10 +44,20 @@ function WelcomeModal(props) {
     }
   }
 
-  return ( 
+  function pcGame() {
+    if(username === "") {
+      setShowMessage(true);
+      setValidationMessage("Enter a username")
+      return; 
+    }
+    props.setNames({playerOne: username, playerTwo: "PC"})
+    props.startPcGame()
+  }
+
+  return (  
     <div className={`welcome-modal ${props.gameEntered ? "hidden" : ""}`}>
       <div className="welcome-modal__body">
-        <h1 className="modal-title">Connect 4</h1>
+        <h1 className="modal-title">Connect 4</h1> 
         <p className="username-msg" style={{opacity: showMessage ? "" : "0"}}>{validationMessage}</p>
         <div className="modal-field">
           <label style={{color: validationMessage === "Enter a username" ? "red" : ""}} className="modal-field__label">username</label>
@@ -59,6 +69,7 @@ function WelcomeModal(props) {
         </div>
         <button onClick={handleCreateGame} className="modal-btn">Create Game</button>
         <button onClick={handleJoinGame} className="modal-btn">Join Game</button>
+        <button onClick={pcGame} className="modal-btn">Play against PC</button> 
       </div>
     </div>
   )

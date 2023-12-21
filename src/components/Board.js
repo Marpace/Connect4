@@ -1,13 +1,17 @@
 import Slot from "./Slot";
 import {useContext, useEffect, useState} from "react";
 import { SocketContext } from "../context/SocketContext";
+import { checkWin } from "../gameplay/checkWin";
+import { determineColumn } from "../gameplay/determineColumn";
 
 const Board = function(props) {
 
   const socket = useContext(SocketContext);
 
   const [top, setTop] = useState("-15%")
+  const [pcGameResult, setPcGameResult] = useState({gameOver: false, winningSlots: []})
 
+  //Sets the correct height for token drop animation
   useEffect(() => {
     switch (props.droppedToken.row) {
       case 0:
@@ -31,25 +35,72 @@ const Board = function(props) {
       default:
         break;
     }
-  }, [props.droppedToken])
+  }, [props.droppedToken]) 
 
-  function tokenDrop(e) {
-    console.log("Clicked column #: " + e.target.id)
+
+  useEffect(() => {
+    if(props.currentPlayer === "pc" && !props.gameOver)  {
+      setTimeout(() => {
+        pcTokenDrop();
+      }, 1000);
+    }
+  }, [props.currentPlayer])
+
+  function tokenDrop(e) { 
     if (props.gameOver || props.playerNumber !== props.currentPlayer) return;
     const column = Number(e.target.id);
     let row = props.board[column].findIndex((slot, index) => {
       return slot.state !== "empty" || index === props.board[column].length - 1;
     });
 
-    //if all slots on that column are filled, return.
+    //if all slots on that column are filled, return. 
     if(row === 0) return; 
 
     // target the next empty slot, or the last slot if entire column is empty
-    if (row !== (props.board[column].length - 1) || props.board[column][row].state !== "empty") row -= 1;
+    if (row !== (props.board[column].length - 1) || props.board[column][row].state !== "empty") row -= 1; 
     
-    socket.emit("tokenDrop", {column: column, row: row})
+    if(props.pcGame) {
+      updatePcGame(column, row)
+      return;
+    } else {
+      socket.emit("tokenDrop", {column: column, row: row})
+    }
   }
-   
+
+  function pcTokenDrop() { 
+    const column = determineColumn(props.board)
+    let row = props.board[column].findIndex((slot, index) => {
+      return slot.state !== "empty" || index === props.board[column].length - 1;
+    });
+    //if all slots on that column are filled, return. 
+    if(row === 0) return; 
+    // target the next empty slot, or the last slot if entire column is empty
+    if (row !== (props.board[column].length - 1) || props.board[column][row].state !== "empty") row -= 1; 
+    return updatePcGame(column, row);
+  }
+
+  function updatePcGame(column, row) {
+    props.setDroppedToken({column: column, row: row})
+    setTimeout(() => {
+      const result = checkWin(props.board, column, row, props.currentPlayer);
+      props.setBoard(prev => { 
+        const copy = prev; 
+        copy[column][row].state = props.currentPlayer;
+        result.winningSlots.forEach(slot => {
+          copy[slot.column][slot.row].winningSlot = true; 
+        })
+        return copy;
+      })
+      setPcGameResult(result);
+      if(result.gameOver) {
+        props.setGameOver(true)
+      } else {
+        props.setCurrentPlayer(prev => prev === 1 ? "pc" : 1)
+      }
+      props.setDroppedToken({column: null, row: null})
+    }, 370);
+  }
+
   return (
     <div className="board">
       {props.board.map((column, columnIndex) => (

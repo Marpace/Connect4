@@ -46,7 +46,7 @@ function Emoticons(props) {
  
 
   return (
-    <div className="emoticons">
+    <div className={`emoticons ${props.pcGame ? "hidden" : ""}`}> 
       <button onClick={() => setShowEmoticons(true)} className="emoticon-btn">
         <img onClick={() => setShowEmoticons(true)} className="smiley" src="./assets/smiley.svg"></img>
       </button>

@@ -1,11 +1,15 @@
 .board {
-  width: 345px;
+  width: 300px;
   padding: 17px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
   position: relative;
+  @include responsive(360px) {
+    width: 345px;
+    padding: 17px 10px;
+  }
   @include responsive(414px) {
     width: 406px;
     padding: 20px 10px;
@@ -37,8 +41,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 11px;
+    gap: 10.7px;
     position: relative;
+    @include responsive(360px) {
+      gap: 11px;
+    }
     @include responsive(500px) {
       gap: 10px;
     }
@@ -72,9 +79,12 @@
 
   }
   .board-img {
-    width: 345px;
+    width: 300px;
     position: absolute;
     top: 0;
+    @include responsive(360px) {
+      width: 345px;
+    }
     @include responsive(414px) {
       width: 400px;
     }

@@ -7,5 +7,8 @@ Done (needs testing) - Handle draw scenario
 Done - Handle player disconnecting/reconnecting
 Done - Make it responsive
 Done - Add game instructions 
-- Animate token drop
+Done - Animate token drop
 - Play against computer
+- Separate index.js into smaller files
+
+Idea - Each player gets one chance to rotate board and either clockwise or counter clockwise and pieces would fall into new positions. 

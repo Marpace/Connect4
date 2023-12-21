@@ -61,13 +61,19 @@ body {
 }
 
 .board {
-  width: 345px;
+  width: 300px;
   padding: 17px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
   position: relative;
+}
+@media only screen and (min-width: 360px) {
+  .board {
+    width: 345px;
+    padding: 17px 10px;
+  }
 }
 @media only screen and (min-width: 414px) {
   .board {
@@ -108,8 +114,13 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 11px;
+  gap: 10.7px;
   position: relative;
+}
+@media only screen and (min-width: 360px) {
+  .board .column {
+    gap: 11px;
+  }
 }
 @media only screen and (min-width: 500px) {
   .board .column {
@@ -135,7 +146,6 @@ body {
   width: 95%;
   aspect-ratio: 1/1;
   border-radius: 50%;
-  outline: 2px solid black;
   position: relative;
 }
 .board .column .empty {
@@ -144,7 +154,7 @@ body {
 .board .column .pl-1 {
   background-color: #981f37;
 }
-.board .column .pl-2 {
+.board .column .pl-2, .board .column .pl-pc {
   background-color: #e28413;
 }
 .board .column .glow {
@@ -201,9 +211,14 @@ body {
 }
 @keyframes fall {}
 .board .board-img {
-  width: 345px;
+  width: 300px;
   position: absolute;
   top: 0;
+}
+@media only screen and (min-width: 360px) {
+  .board .board-img {
+    width: 345px;
+  }
 }
 @media only screen and (min-width: 414px) {
   .board .board-img {

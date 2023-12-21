@@ -2,7 +2,6 @@
   width: 95%;
   aspect-ratio: 1/1;
   border-radius: 50%;
-  outline: 2px solid black;
   position: relative;
 }
 .empty {
@@ -11,7 +10,7 @@
 .pl-1 {
   background-color: $red;
 }
-.pl-2 {
+.pl-2, .pl-pc {
   background-color: $yellow;
 }
 .glow {

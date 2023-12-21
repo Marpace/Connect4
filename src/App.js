@@ -37,6 +37,7 @@ function App() {
   const [gamesPlayed, setGamesPlayed] = useState(0);
   const [counter, setCounter] = useState(null)
   const [droppedToken, setDroppedToken] = useState({column: null, row: null})
+  const [pcGame, setPcGame] = useState(false);
 
   useEffect(() => {
     socket.on("createGameResponse", handleCreateGameResponse);
@@ -60,22 +61,20 @@ function App() {
   }, [gameOver]); 
   
   useEffect(() => {
-    if(!gameOver) {
-      if (currentPlayer === 1) {
-        setMessage(`${names.playerOne}'s turn`);
-      } else { 
-        setMessage(`${names.playerTwo}'s turn`)
-      }
+    if(gameOver) return; 
+    if (currentPlayer === 1) {
+      setMessage(`${names.playerOne}'s turn`);
+    } else { 
+      setMessage(`${names.playerTwo}'s turn`)
     }
+    
   }, [currentPlayer, gameOver]); 
 
   function handleCreateGameResponse(data) {
-    console.log(data)
     setNames({playerOne: data.room.players[0].username, playerTwo: ""})
     setMessage("Waiting for player")
     setGameCode(data.gameCode)
     setGameEntered(true);
-    setGameOver(data.room.gameOver)
   }
 
   function handleJoinGameResponse(room) {
@@ -135,6 +134,13 @@ function App() {
     setGameCode(data.gameCode)
   }
 
+  function startPcGame() {
+    setPcGame(true)
+    setGameEntered(true);
+    setGameOver(false);
+    setPlayerNumber(1)
+  }
+
   return (
     <SocketContext.Provider value={socket}>
       <main className="main"> 
@@ -154,22 +160,39 @@ function App() {
         </div>
           <Board
             board={board}
+            setBoard={setBoard} 
             currentPlayer={currentPlayer} 
+            setCurrentPlayer={setCurrentPlayer}
             playerNumber={playerNumber}
             gameOver={gameOver}
+            setGameOver={setGameOver}
             droppedToken={droppedToken}
+            setDroppedToken={setDroppedToken} 
+            pcGame={pcGame}
           />
           <div className="game-info">
-            <GameMessage gameOver={gameOver} message={message} counter={counter}/>
-            <GameCode gameCode={gameCode} playerNumber={playerNumber}/>
+            <GameMessage 
+              gameOver={gameOver} 
+              message={message} 
+              counter={counter}
+              pcGame={pcGame}
+              />
+            <GameCode 
+              gameCode={gameCode} 
+              playerNumber={playerNumber}
+              pcGame={pcGame}
+              />
             <button onClick={resetGame} className={`${gameOver && gamesPlayed > 0 && !disconnected? "" : "hidden"} ${playerNumber === 2 ? "hidden" : ""} play-again-btn`}>Play Again</button>
             <Emoticons 
               setDisplayedEmoticons={setDisplayedEmoticons}
+              pcGame={pcGame}
             />
             <GameInstructions />
           </div>
-          <WelcomeModal 
+          <WelcomeModal  
             gameEntered={gameEntered}
+            startPcGame={startPcGame}
+            setNames={setNames}
           />
       </main>
     </SocketContext.Provider>
